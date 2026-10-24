@@ -1,0 +1,23 @@
+# Core backend
+fastapi==0.115.14
+uvicorn[standard]==0.34.0
+pydantic==2.10.6
+pydantic-settings==2.8.1
+sqlalchemy==2.0.38
+aiosqlite==0.21.0
+python-multipart==0.0.20
+
+# Reports
+reportlab==4.3.1
+
+# ML (optional at runtime; used by ml pipeline)
+scikit-learn==1.6.1
+numpy==2.2.4
+joblib==1.4.2
+
+# Dev / QA
+pytest==8.3.5
+pytest-asyncio==0.25.3
+httpx==0.28.1
+ruff==0.9.7
+mypy==1.15.0

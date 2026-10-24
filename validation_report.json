@@ -1,0 +1,48 @@
+{
+  "generated_at": "2026-10-07T14:36:11Z",
+  "passed": 8,
+  "total": 8,
+  "all_passed": true,
+  "results": [
+    {
+      "test": "A_clean_no_fabricated_findings",
+      "passed": true,
+      "detail": "status=completed, non-informational findings=0"
+    },
+    {
+      "test": "B_unicode_evidence",
+      "passed": true,
+      "detail": "1 unicode finding(s), codepoint evidence present"
+    },
+    {
+      "test": "C_poisoning_evidence_backed",
+      "passed": true,
+      "detail": "rules=['POISON-002']"
+    },
+    {
+      "test": "D_capability_combination",
+      "passed": true,
+      "detail": "CAP-010 present, status=suspected"
+    },
+    {
+      "test": "E_weak_schema_findings",
+      "passed": true,
+      "detail": "rules=['SCHEMA-011', 'SCHEMA-013']"
+    },
+    {
+      "test": "F_dynamic_vulnerable_fixture",
+      "passed": true,
+      "detail": "dynamic rules=['DYN-CMDI-001', 'DYN-PATH-001']"
+    },
+    {
+      "test": "G_graceful_failure",
+      "passed": true,
+      "detail": "HTTP 422: target rejected by SSRF policy: cannot resolve host 'unreachable-validation-host-9x7wq.example': [Er"
+    },
+    {
+      "test": "H_works_without_llm",
+      "passed": true,
+      "detail": "llm_available=False, semantic=skipped, findings=2"
+    }
+  ]
+}

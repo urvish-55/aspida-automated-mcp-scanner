@@ -1,0 +1,37 @@
+# Python
+__pycache__/
+*.py[cod]
+.venv/
+*.egg-info/
+
+# Node / frontend
+frontend/node_modules/
+frontend/dist/
+
+# Local environment & secrets (never commit)
+.env
+
+# Runtime data (SQLite DB, uploads, reports)
+data/
+
+# ML artifacts are reproducible via `python -m backend.ml.train`
+ml/artifacts/
+
+# OS noise
+.DS_Store
+Thumbs.db
+
+# Logs / local scratch
+server.log
+server.err.log
+*.log
+
+# Tooling / build output
+v/
+node_modules/
+dist/
+*.tsbuildinfo
+.mypy_cache/
+.pytest_cache/
+.ruff_cache/
+.freebuff/

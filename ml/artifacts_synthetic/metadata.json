@@ -1,0 +1,78 @@
+{
+  "model_version": "0.1.0",
+  "feature_schema_version": "1",
+  "trained_at": "2026-10-01T15:00:44.819136+00:00",
+  "trainer_app_version": "0.1.0",
+  "model_type": "sklearn Pipeline(StandardScaler, LogisticRegression)",
+  "features": [
+    "name_len",
+    "desc_len",
+    "desc_sentences",
+    "second_person_count",
+    "imperative_start_ratio",
+    "invisible_unicode_count",
+    "bidi_unicode_count",
+    "homoglyph_count",
+    "exclamation_ratio",
+    "uppercase_ratio",
+    "url_count",
+    "schema_param_count",
+    "schema_has_constraints",
+    "schema_max_depth",
+    "param_path_like",
+    "param_url_like",
+    "param_shell_like",
+    "param_sql_like",
+    "name_suspicious_term",
+    "desc_instruction_phrase",
+    "desc_exfil_pattern",
+    "desc_secret_term"
+  ],
+  "model_status": "NOT PRODUCTION READY - synthetic separation too easy to demonstrate real-world value",
+  "usage": "advisory only - assists prioritization; never creates, upgrades or removes findings",
+  "metrics": {
+    "dataset": {
+      "synthetic": true,
+      "label": "synthetic=true",
+      "seed": 42,
+      "total": 800,
+      "positive": 400,
+      "negative": 400,
+      "train_size": 640,
+      "test_size": 160
+    },
+    "cv_f1_train": {
+      "mean": 1.0,
+      "std": 0.0,
+      "folds": [
+        1.0,
+        1.0,
+        1.0,
+        1.0,
+        1.0
+      ]
+    },
+    "test": {
+      "precision": 1.0,
+      "recall": 1.0,
+      "f1": 1.0,
+      "balanced_accuracy": 1.0
+    },
+    "confusion_matrix_test": {
+      "labels": [
+        "benign(0)",
+        "poisoned(1)"
+      ],
+      "matrix": [
+        [
+          80,
+          0
+        ],
+        [
+          0,
+          80
+        ]
+      ]
+    }
+  }
+}

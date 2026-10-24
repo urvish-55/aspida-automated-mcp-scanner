@@ -1,0 +1,37 @@
+services:
+  api:
+    build: .
+    image: mcp-pentester:0.1.0
+    ports:
+      - "8000:8000"
+    environment:
+      # Safe defaults; override via .env (see .env.example)
+      SAFE_MODE: "true"
+      ALLOW_LOCAL_TARGETS: "false"
+      LLM_PROVIDER: "disabled"
+      DATABASE_URL: "sqlite+aiosqlite:///./data/db/mcpentest.db"
+      RATE_LIMIT_PER_MINUTE: "60"
+      SCAN_TIMEOUT: "300"
+      MAX_REQUESTS: "100"
+      MAX_PAYLOAD_SIZE: "65536"
+    volumes:
+      - app-data:/app/data
+    restart: unless-stopped
+    # NOTE: with ALLOW_LOCAL_TARGETS=false (default) the container cannot scan
+    # the bundled fixtures over localhost. For the local demo flow only, run:
+    #   ALLOW_LOCAL_TARGETS=true docker compose up --build
+    # and use http://host.docker.internal:8101/mcp as the target URL.
+
+  # Optional: the deliberately vulnerable test fixture (TEST FIXTURE ONLY).
+  vulnerable-fixture:
+    build:
+      context: .
+      dockerfile: fixtures/Dockerfile.vulnerable
+    image: mcp-vulnerable-fixture:0.1.0
+    ports:
+      - "8101:8101"
+    restart: false
+    # TEST FIXTURE: synthetic vulnerable MCP server for validating the scanner.
+
+volumes:
+  app-data:

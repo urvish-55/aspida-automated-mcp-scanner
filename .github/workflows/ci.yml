@@ -1,0 +1,71 @@
+name: CI
+
+on:
+  push:
+    branches: [main]
+  pull_request:
+
+jobs:
+  lint:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.12"
+      - run: pip install ruff==0.9.7
+      - run: ruff check backend fixtures
+
+  typecheck:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.12"
+      - run: pip install -r requirements.txt
+      - name: mypy (gating; config in mypy.ini)
+        run: mypy backend
+
+  frontend:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: "22"
+      - run: npm ci || npm install --no-fund --no-audit
+        working-directory: frontend
+      - run: npm run build
+        working-directory: frontend
+
+  tests:
+    runs-on: ubuntu-latest
+    strategy:
+      matrix:
+        python-version: ["3.11", "3.12"]
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: ${{ matrix.python-version }}
+      - run: pip install -r requirements.txt
+      - run: python -m backend.ml.train
+      - name: Unit + integration + security tests
+        env:
+          RATE_LIMIT_PER_MINUTE: "10000"
+        run: python -m pytest -q --tb=short
+
+  security-checks:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.12"
+      - run: pip install pip-audit
+      - name: Dependency vulnerability audit (gating)
+        run: pip-audit -r requirements.txt
+      - name: Secret scan (basic)
+        run: |
+          ! grep -rInE "(api[_-]?key|secret|password|token)\s*=\s*['\"][A-Za-z0-9+/]{16,}" backend frontend/src fixtures --include="*.py" --include="*.ts" --include="*.tsx" || (echo "potential hardcoded secret found" && exit 1)
